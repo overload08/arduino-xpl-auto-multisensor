@@ -115,7 +115,13 @@ void dumpTemps() {
     msg.SetSchema_P(PSTR("sensor"), PSTR("basic"));
     String address;
     for ( i = 0; i < 8; i++) {
-      address = address + String(addr[addrSub][i], HEX);
+      if (addr[addrSub][i] < 10) { 
+        address = address + "0" + addr[addrSub][i]; 
+      }
+      else
+      {
+        address = address + String(addr[addrSub][i], HEX);
+      }
     }
     address.toUpperCase();
     msg.AddCommand("device", address.c_str());
