@@ -8,6 +8,7 @@
 
 #define ONE_WIRE_BUS 49
 #define TEMPERATURE_PRECISION 11
+#define DELAY_LOOP 60
 
 OneWire  ds(ONE_WIRE_BUS);
 DallasTemperature sensors(&ds);
@@ -65,6 +66,7 @@ void SendUdPMessage(char *buffer)
 void loop() {
   dumpTemps();
   detectDevice();
+  delay(DELAY_LOOP * 1000);
 }
 
 void dumpTemps() {
