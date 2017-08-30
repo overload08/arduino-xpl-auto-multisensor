@@ -8,7 +8,7 @@
 
 #define ONE_WIRE_BUS 49
 #define TEMPERATURE_PRECISION 11
-#define DELAY_LOOP 60
+#define LOOP_DELAY 60
 
 OneWire  ds(ONE_WIRE_BUS);
 DallasTemperature sensors(&ds);
@@ -35,8 +35,6 @@ void setup() {
   pinMode(43, OUTPUT);
   digitalWrite(43, HIGH);
   Serial.begin(115200);
-  // Search for 1-wire devices
-  detectDevice();
   sensors.begin();
   sensors.setResolution(TEMPERATURE_PRECISION);
   sensors.requestTemperatures();
@@ -64,9 +62,10 @@ void SendUdPMessage(char *buffer)
 }
 
 void loop() {
-  dumpTemps();
   detectDevice();
-  delay(DELAY_LOOP * 1000);
+  int millist = 0;
+  dumpTemps();
+  delay((uint16_t) LOOP_DELAY * 1000);
 }
 
 void dumpTemps() {
